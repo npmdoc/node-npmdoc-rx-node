@@ -1,0 +1,335 @@
+<html><head></head><body><div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a href="https://github.com/Reactive-Extensions/rx-node">rx-node (v1.0.2)</a>
+</h1>
+<h4>RxJS Bindings for Node.js and io.js</h4>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.rx-node">module rx-node</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.rx-node.fromReadLineStream">
+            function <span class="apidocSignatureSpan">rx-node.</span>fromReadLineStream
+            <span class="apidocSignatureSpan">(stream)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.rx-node.fromReadableStream">
+            function <span class="apidocSignatureSpan">rx-node.</span>fromReadableStream
+            <span class="apidocSignatureSpan">(stream, dataEventName)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.rx-node.fromStream">
+            function <span class="apidocSignatureSpan">rx-node.</span>fromStream
+            <span class="apidocSignatureSpan">(stream, finishEventName, dataEventName)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.rx-node.fromTransformStream">
+            function <span class="apidocSignatureSpan">rx-node.</span>fromTransformStream
+            <span class="apidocSignatureSpan">(stream, dataEventName)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.rx-node.fromWritableStream">
+            function <span class="apidocSignatureSpan">rx-node.</span>fromWritableStream
+            <span class="apidocSignatureSpan">(stream)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.rx-node.toEventEmitter">
+            function <span class="apidocSignatureSpan">rx-node.</span>toEventEmitter
+            <span class="apidocSignatureSpan">(observable, eventName, selector)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.rx-node.writeToStream">
+            function <span class="apidocSignatureSpan">rx-node.</span>writeToStream
+            <span class="apidocSignatureSpan">(observable, stream, encoding)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.rx-node" id="apidoc.module.rx-node">module rx-node</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.rx-node.fromReadLineStream" id="apidoc.element.rx-node.fromReadLineStream">
+        function <span class="apidocSignatureSpan">rx-node.</span>fromReadLineStream
+        <span class="apidocSignatureSpan">(stream)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">fromReadLineStream = function (stream) {
+  return this.fromStream(stream, 'close', 'line');
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.rx-node.fromReadableStream" id="apidoc.element.rx-node.fromReadableStream">
+        function <span class="apidocSignatureSpan">rx-node.</span>fromReadableStream
+        <span class="apidocSignatureSpan">(stream, dataEventName)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">fromReadableStream = function (stream, dataEventName) {
+  return this.fromStream(stream, 'end', dataEventName);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.rx-node.fromStream" id="apidoc.element.rx-node.fromStream">
+        function <span class="apidocSignatureSpan">rx-node.</span>fromStream
+        <span class="apidocSignatureSpan">(stream, finishEventName, dataEventName)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">fromStream = function (stream, finishEventName, dataEventName) {
+  stream.pause();
+
+  finishEventName || (finishEventName = 'end');
+  dataEventName || (dataEventName = 'data');
+
+  return Observable.create(function (observer) {
+    function dataHandler (data) {
+      observer.onNext(data);
+    }
+
+    function errorHandler (err) {
+      observer.onError(err);
+    }
+
+    function endHandler () {
+      observer.onCompleted();
+    }
+
+    stream.addListener(dataEventName, dataHandler);
+    stream.addListener('error', errorHandler);
+    stream.addListener(finishEventName, endHandler);
+
+    stream.resume();
+
+    return function () {
+      stream.removeListener(dataEventName, dataHandler);
+      stream.removeListener('error', errorHandler);
+      stream.removeListener(finishEventName, endHandler);
+    };
+  }).publish().refCount();
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+/**
+ * Converts a flowing readable stream to an Observable sequence.
+ * @param {Stream} stream A stream to convert to a observable sequence.
+ * @param {String} [dataEventName] Event that notifies about incoming data. ("data" by default)
+ * @returns {Observable} An observable sequence which fires on each 'data' event as well as handling 'error'
+and 'end' events.
+ */
+fromReadableStream: function (stream, dataEventName) {
+  return this.<span class="apidocCodeKeywordSpan">fromStream</span>(stream, 'end', dataEventName);
+},
+
+/**
+ * Converts a flowing readline stream to an Observable sequence.
+ * @param {Stream} stream A stream to convert to a observable sequence.
+ * @returns {Observable} An observable sequence which fires on each 'data' event as well as handling 'error'
+and 'end' events.
+ */
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.rx-node.fromTransformStream" id="apidoc.element.rx-node.fromTransformStream">
+        function <span class="apidocSignatureSpan">rx-node.</span>fromTransformStream
+        <span class="apidocSignatureSpan">(stream, dataEventName)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">fromTransformStream = function (stream, dataEventName) {
+  return this.fromStream(stream, 'finish', dataEventName);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.rx-node.fromWritableStream" id="apidoc.element.rx-node.fromWritableStream">
+        function <span class="apidocSignatureSpan">rx-node.</span>fromWritableStream
+        <span class="apidocSignatureSpan">(stream)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">fromWritableStream = function (stream) {
+  return this.fromStream(stream, 'finish');
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.rx-node.toEventEmitter" id="apidoc.element.rx-node.toEventEmitter">
+        function <span class="apidocSignatureSpan">rx-node.</span>toEventEmitter
+        <span class="apidocSignatureSpan">(observable, eventName, selector)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">toEventEmitter = function (observable, eventName, selector) {
+  var e = new EventEmitter();
+
+  // Used to publish the events from the observable
+  e.publish = function () {
+    e.subscription = observable.subscribe(
+      function (x) {
+        var result = x;
+        if (selector) {
+          try {
+            result = selector(x);
+          } catch (e) {
+            return e.emit('error', e);
+          }
+        }
+
+        e.emit(eventName, result);
+      },
+      function (err) {
+        e.emit('error', err);
+      },
+      function () {
+        e.emit('end');
+      });
+  };
+
+  return e;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.rx-node.writeToStream" id="apidoc.element.rx-node.writeToStream">
+        function <span class="apidocSignatureSpan">rx-node.</span>writeToStream
+        <span class="apidocSignatureSpan">(observable, stream, encoding)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">writeToStream = function (observable, stream, encoding) {
+  var source = observable.pausableBuffered();
+
+  function onDrain() {
+    source.resume();
+  }
+
+  stream.addListener('drain', onDrain);
+
+  var disposable = source.subscribe(
+    function (x) {
+      !stream.write(String(x), encoding) &amp;&amp; source.pause();
+    },
+    function (err) {
+      stream.emit('error', err);
+    },
+    function () {
+      // Hack check because STDIO is not closable
+      !stream._isStdio &amp;&amp; stream.end();
+      stream.removeListener('drain', onDrain);
+    });
+
+  source.resume();
+
+  return disposable;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
+</body></html>
